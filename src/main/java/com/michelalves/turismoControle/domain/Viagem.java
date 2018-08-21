@@ -2,23 +2,31 @@ package com.michelalves.turismoControle.domain;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.ForeignKey;
 
-@Entity
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+@Entity(name="Viagem")
 public class Viagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer idViagem;
 	
 	private Date dataIda;
 	private Date dataVolta;
@@ -29,19 +37,38 @@ public class Viagem implements Serializable {
 	@ForeignKey(name="estados_fk")
 	private Estados estados = new Estados();
 	
-	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@ForeignKey(name="cidades_fk")
 	private Cidades cidades = new Cidades();
+	
+	@JsonBackReference
+	@ManyToMany
+	@JoinTable(name = "VIAGEM_PASSAGEIRO", joinColumns = @JoinColumn(name = "viagem_id"), inverseJoinColumns = @JoinColumn(name = "passageiro_id"))
+	private List<Passageiro> passageiros = new ArrayList<>();
+	
+	@OneToMany(mappedBy="viagem")
+	private List<Financeiro> financeiros = new ArrayList<>();
+	
+	public Viagem(Integer id, Date dataIda, Date dataVolta, Long valorHotel, Long valorTransporte, Estados estados,
+			Cidades cidades) {
+		super();
+		this.idViagem = id;
+		this.dataIda = dataIda;
+		this.dataVolta = dataVolta;
+		this.valorHotel = valorHotel;
+		this.valorTransporte = valorTransporte;
+		this.estados = estados;
+		this.cidades = cidades;
+		}
 
 
 	public Integer getId() {
-		return id;
+		return idViagem;
 	}
 
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.idViagem = id;
 	}
 
 
@@ -104,12 +131,41 @@ public class Viagem implements Serializable {
 		this.cidades = cidades;
 	}
 
+	public Integer getIdViagem() {
+		return idViagem;
+	}
+
+
+	public void setIdViagem(Integer idViagem) {
+		this.idViagem = idViagem;
+	}
+
+
+	public List<Passageiro> getPassageiros() {
+		return passageiros;
+	}
+
+
+	public void setPassageiros(List<Passageiro> passageiros) {
+		this.passageiros = passageiros;
+	}
+
+
+	public List<Financeiro> getFinanceiros() {
+		return financeiros;
+	}
+
+
+	public void setFinanceiros(List<Financeiro> financeiros) {
+		this.financeiros = financeiros;
+	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((idViagem == null) ? 0 : idViagem.hashCode());
 		return result;
 	}
 
@@ -123,10 +179,10 @@ public class Viagem implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Viagem other = (Viagem) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (idViagem == null) {
+			if (other.idViagem != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!idViagem.equals(other.idViagem))
 			return false;
 		return true;
 	}
