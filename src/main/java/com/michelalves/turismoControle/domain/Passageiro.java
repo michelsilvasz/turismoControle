@@ -16,7 +16,7 @@ import javax.persistence.UniqueConstraint;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@Entity
+@Entity(name="Passageiro")
 @Table(name="Passageiro", uniqueConstraints = {@UniqueConstraint(columnNames= {"cpfOuRgCertidao"}, name="IDXUKPasseiro_cpfOuRgCertidao")})
 public class Passageiro implements Serializable {
 	private static final long serialVersionUID = 1L;
