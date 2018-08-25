@@ -8,17 +8,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity(name="Cidades")
 public class Cidades {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String nome;
 	
+	@JsonManagedReference
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH) 
 	private Estados estados;
+	
+	public Cidades() {
+		
+	}
+	
+	public Cidades(Long id, String nome, Estados estados) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.estados = estados;
+	}
 
 	public Long getId() {
 		return id;

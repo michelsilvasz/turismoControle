@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity(name="Financeiro")
 public class Financeiro implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -21,10 +23,12 @@ public class Financeiro implements Serializable {
 	private Long saldoDevedor;
 	private Long valorPago;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "passageiro_id")
 	private Passageiro passageiro;
 	
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name = "viagem_id")
 	private Viagem viagem;

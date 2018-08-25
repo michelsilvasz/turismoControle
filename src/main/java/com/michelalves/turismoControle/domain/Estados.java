@@ -1,21 +1,42 @@
 package com.michelalves.turismoControle.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-@Entity(name="Estados")
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
+@Entity(name="Estados")  
 public class Estados {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+//	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private String nome;
 
 	private String sigla;
 	
+	@JsonBackReference
+	@OneToMany(mappedBy = "estados")
+	private List<Cidades> cidades = new ArrayList<>();
+	
+	public Estados() {
+		
+	}
+	
+	public Estados(Long id, String nome, String sigla) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.sigla = sigla;
+	}
 
 	public Long getId() {
 		return id;

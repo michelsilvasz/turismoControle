@@ -1,8 +1,8 @@
 package com.michelalves.turismoControle.domain;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,10 +15,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.ForeignKey;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="Viagem")
 public class Viagem implements Serializable {
@@ -41,16 +43,25 @@ public class Viagem implements Serializable {
 	@ForeignKey(name="cidades_fk")
 	private Cidades cidades = new Cidades();
 	
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(name = "VIAGEM_PASSAGEIRO", joinColumns = @JoinColumn(name = "viagem_id"), inverseJoinColumns = @JoinColumn(name = "passageiro_id"))
 	private List<Passageiro> passageiros = new ArrayList<>();
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="viagem")
 	private List<Financeiro> financeiros = new ArrayList<>();
 	
+	@JsonManagedReference
+	@OneToOne
+	private Onibus onibus = new Onibus();
+	
+	public Viagem() {
+		
+	}
+	
 	public Viagem(Integer id, Date dataIda, Date dataVolta, Long valorHotel, Long valorTransporte, Estados estados,
-			Cidades cidades) {
+			Cidades cidades, Onibus onibus) {
 		super();
 		this.idViagem = id;
 		this.dataIda = dataIda;
@@ -59,6 +70,7 @@ public class Viagem implements Serializable {
 		this.valorTransporte = valorTransporte;
 		this.estados = estados;
 		this.cidades = cidades;
+		this.onibus = onibus;
 		}
 
 
@@ -160,6 +172,13 @@ public class Viagem implements Serializable {
 		this.financeiros = financeiros;
 	}
 
+	public Onibus getOnibus() {
+		return onibus;
+	}
+
+	public void setOnibus(Onibus onibus) {
+		this.onibus = onibus;
+	}
 
 	@Override
 	public int hashCode() {
