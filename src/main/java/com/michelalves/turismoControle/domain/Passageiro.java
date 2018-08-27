@@ -14,8 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Passageiro")
 @Table(name="Passageiro", uniqueConstraints = {@UniqueConstraint(columnNames= {"cpfOuRgCertidao"}, name="IDXUKPasseiro_cpfOuRgCertidao")})
@@ -26,17 +26,17 @@ public class Passageiro implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idPassageiro;
 	private String nome;
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataNascimento;
 	private String sexo;
 	private String cpfOuRgCertidao;
 	private String telefone;
 	private String endereco;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany(mappedBy="passageiros")
 	private List<Viagem> viagens = new ArrayList<>();
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy = "passageiro")
 	private List<Financeiro> financeiros = new ArrayList<>();
 	

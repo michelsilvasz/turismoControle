@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Onibus implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -20,8 +18,7 @@ public class Onibus implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idBus;
 	private Integer quantLugares;
-	
-	@JsonManagedReference 
+	 
 	@OneToMany(mappedBy = "onibus")
 	private List<Assentos> assentos = new ArrayList<>();
 	

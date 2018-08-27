@@ -11,10 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.ForeignKey;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Assentos implements Serializable {
@@ -25,11 +22,10 @@ public class Assentos implements Serializable {
 	private Integer id;
 	private String assento;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH)
 	private Onibus onibus = new Onibus();
 	
-	@JsonManagedReference
 	@OneToOne
 	private Passageiro passageiro = new Passageiro();
 	

@@ -61,7 +61,7 @@ public class TurismoControleApplication implements CommandLineRunner{
 			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 			Date dataIda = formato.parse("01/01/2018");
 			Date dataVolta = formato.parse("01/01/2018");
-			Viagem viagem  = new Viagem(null, dataIda, dataVolta, (long)2000, (long)1500, estados, cidades, onibus);
+			Viagem viagem  = new Viagem(null, dataIda, dataVolta, 2000.00, 1500.00, estados, cidades, onibus);
 			viagemRepository.save(viagem);
 			//passageiro
 			Date dataNascimento = formato.parse("11/11/1994");
@@ -77,7 +77,7 @@ public class TurismoControleApplication implements CommandLineRunner{
 			viagemRepository.save(viagem);
 			
 			//Financeiro
-			Financeiro financeiro = new Financeiro(null, Long.valueOf(800), Long.valueOf(800), Long.valueOf(0), passageiro, viagem);
+			Financeiro financeiro = new Financeiro(null, 800.00, 800.00, 0.00, passageiro, viagem);
 			financeiroRepository.save(Arrays.asList(financeiro));
 		
 	}

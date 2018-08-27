@@ -17,10 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import org.hibernate.annotations.ForeignKey;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity(name="Viagem")
 public class Viagem implements Serializable {
@@ -29,30 +26,28 @@ public class Viagem implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer idViagem;
-	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataIda;
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dataVolta;
-	private Long valorHotel;
-	private Long valorTransporte;
+	private Double valorHotel;
+	private Double valorTransporte;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@ForeignKey(name="estados_fk")
+	@JoinColumn(name="estados_fk")
 	private Estados estados = new Estados();
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@ForeignKey(name="cidades_fk")
+	@JoinColumn(name="cidades_fk")
 	private Cidades cidades = new Cidades();
 	
-	@JsonManagedReference
 	@ManyToMany
 	@JoinTable(name = "VIAGEM_PASSAGEIRO", joinColumns = @JoinColumn(name = "viagem_id"), inverseJoinColumns = @JoinColumn(name = "passageiro_id"))
 	private List<Passageiro> passageiros = new ArrayList<>();
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="viagem")
 	private List<Financeiro> financeiros = new ArrayList<>();
 	
-	@JsonManagedReference
 	@OneToOne
 	private Onibus onibus = new Onibus();
 	
@@ -60,7 +55,7 @@ public class Viagem implements Serializable {
 		
 	}
 	
-	public Viagem(Integer id, Date dataIda, Date dataVolta, Long valorHotel, Long valorTransporte, Estados estados,
+	public Viagem(Integer id, Date dataIda, Date dataVolta, Double valorHotel, Double valorTransporte, Estados estados,
 			Cidades cidades, Onibus onibus) {
 		super();
 		this.idViagem = id;
@@ -104,22 +99,22 @@ public class Viagem implements Serializable {
 	}
 
 
-	public Long getValorHotel() {
+	public Double getValorHotel() {
 		return valorHotel;
 	}
 
 
-	public void setValorHotel(Long valorHotel) {
+	public void setValorHotel(Double valorHotel) {
 		this.valorHotel = valorHotel;
 	}
 
 
-	public Long getValorTransporte() {
+	public Double getValorTransporte() {
 		return valorTransporte;
 	}
 
 
-	public void setValorTransporte(Long valorTransporte) {
+	public void setValorTransporte(Double valorTransporte) {
 		this.valorTransporte = valorTransporte;
 	}
 

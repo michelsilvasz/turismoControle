@@ -3,12 +3,8 @@ package com.michelalves.turismoControle.domain;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity(name="Cidades")
 public class Cidades {
@@ -19,7 +15,6 @@ public class Cidades {
 
 	private String nome;
 	
-	@JsonManagedReference
 	@ManyToOne(fetch=FetchType.EAGER,cascade=CascadeType.REFRESH) 
 	private Estados estados;
 	

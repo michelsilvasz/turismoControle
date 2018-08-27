@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity(name="Estados")  
@@ -23,7 +21,7 @@ public class Estados {
 
 	private String sigla;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "estados")
 	private List<Cidades> cidades = new ArrayList<>();
 	

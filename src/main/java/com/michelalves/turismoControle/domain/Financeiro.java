@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Financeiro")
 public class Financeiro implements Serializable {
@@ -19,16 +19,16 @@ public class Financeiro implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer idFinanceiro;
 	
-	private Long valorViagem;	
-	private Long saldoDevedor;
-	private Long valorPago;
+	private Double valorViagem;	
+	private Double saldoDevedor;
+	private Double valorPago;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "passageiro_id")
 	private Passageiro passageiro;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "viagem_id")
 	private Viagem viagem;
@@ -37,7 +37,7 @@ public class Financeiro implements Serializable {
 		
 	}
 
-	public Financeiro(Integer idFinanceiro, Long valorViagem, Long saldoDevedor, Long valorPago, Passageiro passageiro,
+	public Financeiro(Integer idFinanceiro, Double valorViagem, Double saldoDevedor, Double valorPago, Passageiro passageiro,
 			Viagem viagem) {
 		super();
 		this.idFinanceiro = idFinanceiro;
@@ -56,27 +56,27 @@ public class Financeiro implements Serializable {
 		this.idFinanceiro = idFinanceiro;
 	}
 
-	public Long getValorViagem() {
+	public Double getValorViagem() {
 		return valorViagem;
 	}
 
-	public void setValorViagem(Long valorViagem) {
+	public void setValorViagem(Double valorViagem) {
 		this.valorViagem = valorViagem;
 	}
 
-	public Long getSaldoDevedor() {
+	public Double getSaldoDevedor() {
 		return saldoDevedor;
 	}
 
-	public void setSaldoDevedor(Long saldoDevedor) {
+	public void setSaldoDevedor(Double saldoDevedor) {
 		this.saldoDevedor = saldoDevedor;
 	}
 
-	public Long getValorPago() {
+	public Double getValorPago() {
 		return valorPago;
 	}
 
-	public void setValorPago(Long valorPago) {
+	public void setValorPago(Double valorPago) {
 		this.valorPago = valorPago;
 	}
 
